@@ -1,0 +1,21 @@
+@import '../styles/variables';
+
+.header {
+    background: rebeccapurple;
+    margin-bottom: 1.45rem;
+}
+
+.header__content {
+    margin: 0 auto;
+    max-width: $site-width;
+    padding: 1.45rem 1.0875rem;
+}
+
+.header__home-link {
+    color: white;
+    text-decoration: none;
+}
+
+.header__home-header {
+    margin: 0;
+}
