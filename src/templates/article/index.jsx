@@ -1,21 +1,28 @@
 import React from 'react';
+import Img from 'gatsby-image';
 import Layout from '../../components/layout';
 import { graphql } from 'gatsby';
 
+import './article.scss';
+
 export default ({ data }) => {
-    const fields = Object.keys(data.strapiArticle);
+    const article = data.strapiArticle;
     return (
         <Layout>
-            <div>
-                {fields.map(field => (
-                    <p>
-                        <strong>
-                            {field}
-                        </strong>
-                        : {data.strapiArticle[field]}
-                    </p>
-                ))}
-            </div>
+            <h1>
+                {article.title}
+            </h1>
+            <p className="article__created-at">
+                {article.fields.createdAtMsk}, {article.author.firstname}
+            </p>
+            <p className="article__excerpt">
+                {article.excerpt}
+            </p>
+            <Img
+                fixed={article.cover.childImageSharp.fixed}
+                alt={article.title}
+            />
+            <div dangerouslySetInnerHTML={{ __html: article.fields.htmlContent }} />
         </Layout>
     );
 };
@@ -25,23 +32,22 @@ export const query = graphql`
         strapiArticle(fields: { slug: { eq: $slug } }) {
             title
             excerpt
-            content
-          }
+            fields {
+                createdAtMsk
+                slug
+                htmlContent
+            }
+            author {
+                firstname
+                lastname
+            }
+            cover {
+                childImageSharp {
+                    fixed(height: 250) {
+                        ...GatsbyImageSharpFixed
+                    }
+                }
+            }
+        }
     }
 `;
-
-// fields {
-//     createdAtMsk
-//     slug
-// }
-// author {
-//     firstname
-//     lastname
-// }
-// cover {
-//     childImageSharp {
-//         fluid {
-//             ...GatsbyImageSharpFluid
-//         }
-//     }
-// }

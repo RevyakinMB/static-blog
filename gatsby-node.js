@@ -1,20 +1,17 @@
 const path = require('path');
 const moment = require('moment-timezone');
+const showdown = require('showdown');
+const converter = new showdown.Converter();
+
 const spaceRegexp = / /g;
 
 exports.onCreateNode = ({ node, actions: { createNodeField } }) => {
     if (node.internal.type.startsWith('Strapi')) {
         const createdAtMsk = moment(node.created_at).tz('Europe/Moscow');
-        const updatedAtMsk = moment(node.updated_at).tz('Europe/Moscow');
         createNodeField({
             node,
             name: 'createdAtMsk',
-            value: createdAtMsk.format('DD.MM.YYYY HH:mm'),
-        });
-        createNodeField({
-            node,
-            name: 'updatedAtMsk',
-            value: updatedAtMsk.format('DD.MM.YYYY HH:mm'),
+            value: createdAtMsk.format('DD.MM.YYYY'),
         });
     }
 
@@ -26,6 +23,14 @@ exports.onCreateNode = ({ node, actions: { createNodeField } }) => {
             node,
             name: 'slug',
             value: slug,
+        });
+
+        const mdContent = node.content;
+        const htmlContent = converter.makeHtml(mdContent);
+        createNodeField({
+            node,
+            name: 'htmlContent',
+            value: htmlContent,
         });
     }
 };

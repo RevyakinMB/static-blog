@@ -1,0 +1,14 @@
+%article__description-text {
+    color: hsla(0, 0%, 0%, 0.3);
+    line-height: 1.1;
+}
+
+.article__excerpt {
+    @extend %article__description-text;
+    font-size: 1.1rem;
+}
+
+.article__created-at {
+    @extend %article__description-text;
+    font-size: 0.85028rem;
+}
