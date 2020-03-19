@@ -3,7 +3,7 @@ const moment = require('moment-timezone');
 const showdown = require('showdown');
 const converter = new showdown.Converter();
 
-const spaceRegexp = / /g;
+const helperRegexp = /[# ]/g;
 
 exports.onCreateNode = ({ node, actions: { createNodeField } }) => {
     if (node.internal.type.startsWith('Strapi')) {
@@ -16,9 +16,10 @@ exports.onCreateNode = ({ node, actions: { createNodeField } }) => {
     }
 
     if (node.internal.type.startsWith('StrapiArticle')) {
-        const title = node.title;
         const id = node.strapiId;
-        const slug = `${id}-${title.replace(spaceRegexp, '-')}`.toLowerCase();
+        const title = node.title;
+        const updatedTitle = title.replace(helperRegexp, '-');
+        const slug = `${id}-${updatedTitle}`.toLowerCase();
         createNodeField({
             node,
             name: 'slug',

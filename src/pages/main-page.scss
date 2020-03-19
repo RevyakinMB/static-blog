@@ -1,0 +1,23 @@
+.article-list-item {
+    padding: 1rem;
+
+    &:hover {
+        background-color: hsla(0, 0%, 0%, 0.4);
+        color: white;
+
+        .article-list-item__created-at {
+            color: white;
+        }
+    }
+}
+
+.article-list-item__title {
+    text-decoration: none;
+    color: inherit;
+}
+
+.article-list-item__created-at {
+    color: hsla(0, 0%, 0%, 0.3);
+    font-size: 0.85028rem;
+    margin-bottom: 0;
+}
